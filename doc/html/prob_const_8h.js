@@ -1,0 +1,27 @@
+var prob_const_8h =
+[
+    [ "ASSIGNTABLE", "prob_const_8h.html#a89a51fd90be13ecaf54936fd71ad6a1c", null ],
+    [ "ATRECEPTION", "prob_const_8h.html#ace325e860004b02722b8e30d8f196fe5", null ],
+    [ "BILLREQ", "prob_const_8h.html#a111a5abf63ad446647704f840fc48cc0", null ],
+    [ "CHECKOUT", "prob_const_8h.html#a0193c96bd26372d08443c90c46bceb5c", null ],
+    [ "COOK", "prob_const_8h.html#ac3f157003ae424ab6f2ad104ea9b847d", null ],
+    [ "EAT", "prob_const_8h.html#a168db05df29f4ea8393be04e6168e236", null ],
+    [ "EATDEV", "prob_const_8h.html#a3a1bb9b0b00ad7c79bbb427b05a24217", null ],
+    [ "FOOD_REQUEST", "prob_const_8h.html#a722d898773bacc60be0a67d1c94f9f2b", null ],
+    [ "FOODREADY", "prob_const_8h.html#a225f4bab98647e6ed0eb95b78dd4dbc5", null ],
+    [ "FOODREQ", "prob_const_8h.html#a82f216d94cc09212463ad39041a8ff34", null ],
+    [ "GOTOREST", "prob_const_8h.html#aa1708ed171a6de8466c4598d8c0316e0", null ],
+    [ "INFORM_CHEF", "prob_const_8h.html#af1430f2ef482d3b24742a413d0ae3478", null ],
+    [ "LEAVING", "prob_const_8h.html#aa4715c3dc3c7382c64bea0d659955ddb", null ],
+    [ "MAXCOOK", "prob_const_8h.html#af97f5960d6924dacbffb3bf256f402e6", null ],
+    [ "MAXGROUPS", "prob_const_8h.html#a54e764f51810649efbac536750413513", null ],
+    [ "NUMTABLES", "prob_const_8h.html#ab382fe1b76822ae8543b342fce3df974", null ],
+    [ "RECVPAY", "prob_const_8h.html#aae6ba4ed6e79d9259f66f547b93526b2", null ],
+    [ "REST", "prob_const_8h.html#af61315e1c4a04436923a5c52196cdd3c", null ],
+    [ "STARTDEV", "prob_const_8h.html#aaf69d1cd20017ced087dbb94df33168c", null ],
+    [ "TABLEREQ", "prob_const_8h.html#af2d525ac4a990ba2115085df3e54ef11", null ],
+    [ "TAKE_TO_TABLE", "prob_const_8h.html#a2b1a05137872c6f45bda12051f689ef4", null ],
+    [ "WAIT_FOR_FOOD", "prob_const_8h.html#ad201faa0af7ba4c786c9c04882a42e05", null ],
+    [ "WAIT_FOR_ORDER", "prob_const_8h.html#a4ed9196d2121da6b8287d689e93fe72d", null ],
+    [ "WAIT_FOR_REQUEST", "prob_const_8h.html#a4859ec051e6949e9635ef26c2046df15", null ]
+];
