@@ -149,7 +149,6 @@ int main (int argc, char *argv[])
  */
 static int decideTableOrWait(int n)
 {
-     //Estado do grupo
     int groupStat = sh->fSt.st.groupStat[n];
 
     int table0=0;
@@ -163,22 +162,15 @@ static int decideTableOrWait(int n)
         }
     }
 
-
-    //Se o estado do grupo for ATRECEPTION continua
     if(groupStat==ATRECEPTION){
-        //Ambas as mesas estao ocupada
          if(table0==1 && table1==1) return -1;
 
-        //Ambas estao livres
          else if(table1 == 0 && table0==0) return 0;
 
-        //Apenas a mesa 1
          else if(table0==0 && table1==1) return 0;
 
-        //Apenas a mesa 2
          else if(table0==1 && table1==0) return 1;
 
-         //if error
          else exit (EXIT_FAILURE);
     }
 
@@ -224,7 +216,7 @@ static request waitForGroup()
         perror ("error on the up operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
     }
-    // Atualiza o estado e guarda-o
+    
     sh->fSt.st.receptionistStat = WAIT_FOR_REQUEST;
     saveState(nFic, &sh->fSt);
     
@@ -232,7 +224,7 @@ static request waitForGroup()
         perror ("error on the down operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
     }
-    // Espera por um pedido de um grupo
+    
     if (semDown (semgid, sh->receptionistReq) == -1)  {                                                  
         perror ("error on the up operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
@@ -242,14 +234,14 @@ static request waitForGroup()
         perror ("error on the up operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
     }
-    // Guarda o pedido na variavel ret
+    
     ret.reqType = sh->fSt.receptionistRequest.reqType;
     ret.reqGroup = sh->fSt.receptionistRequest.reqGroup;
     if (semUp (semgid, sh->mutex) == -1) {                                                  /* exit critical region */
      perror ("error on the down operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
     }
-    // Sinaliza que esta disponivel para novos pedidos
+    
     if (semUp (semgid, sh->receptionistRequestPossible) == -1) {                                                  
      perror ("error on the down operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
@@ -272,14 +264,13 @@ static void provideTableOrWaitingRoom (int n)
         perror ("error on the up operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
     }
-
-    // Atualiza estado e guarda-o
+    
     sh->fSt.st.receptionistStat = ASSIGNTABLE;
     saveState(nFic, &sh->fSt);
 
-    if(decideTableOrWait(n)!=-1){       //Apenas se tiver mesa disponivel
-        sh->fSt.assignedTable[n]=decideTableOrWait(n);  //Atualiza a memoria
-        //Sinaliza que se pode prosseguir
+    if(decideTableOrWait(n)!=-1){  
+        sh->fSt.assignedTable[n]=decideTableOrWait(n);  
+        
         if (semUp (semgid, sh->waitForTable[n]) == -1) {   
             perror ("error on the down operation for semaphore access (CT)");
             exit (EXIT_FAILURE);
@@ -309,23 +300,22 @@ static void receivePayment (int n)
         perror ("error on the up operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
     }
-    // Atualiza estado e guarda-o
+    
     sh->fSt.st.receptionistStat = RECVPAY;
     saveState(nFic, &sh->fSt);
     
-    //Sinaliza que a mesa esta fechada
     if (semUp (semgid, sh->tableDone[sh->fSt.assignedTable[n]]) == -1) {                                                     
         perror ("error on the up operation for semaphore access (CT)");
         exit (EXIT_FAILURE);
     }
 
-    sh->fSt.assignedTable[n]=-1;    //grupo nao esta em nenhuma mesa
+    sh->fSt.assignedTable[n]=-1;   
     int groupTemp=decideNextGroup(); 
     
     if (groupTemp!=-1 && sh->fSt.st.groupStat[groupTemp]==ATRECEPTION)
     {
-        sh->fSt.assignedTable[groupTemp]=decideTableOrWait(groupTemp);  //Atualiza a memoria
-        //Mesa livre para o grupo groupTemp
+        sh->fSt.assignedTable[groupTemp]=decideTableOrWait(groupTemp);  
+        
         if (semUp (semgid, sh->waitForTable[groupTemp]) == -1) {   
             perror ("error on the down operation for semaphore access (CT)");
             exit (EXIT_FAILURE);
