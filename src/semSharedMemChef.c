@@ -124,7 +124,7 @@ int main (int argc, char *argv[])
  */
 static void waitForOrder ()
 {
-    //Espera por uma ordem
+    //Waits for an order
     if (semDown(semgid, sh->waitOrder) == -1) {
         perror ("error on the down operation for waitOrder (PT)");
         exit (EXIT_FAILURE);
@@ -135,8 +135,8 @@ static void waitForOrder ()
         exit (EXIT_FAILURE);
     }
 
-    sh->fSt.st.chefStat = COOK; //Altera o estado para COOK
-    saveState(nFic, &sh->fSt);  //Guarda o estado
+    sh->fSt.st.chefStat = COOK; //Changes state to COOK
+    saveState(nFic, &sh->fSt);  //Saves state
 
     lastGroup = sh->fSt.foodGroup;
 
@@ -145,7 +145,7 @@ static void waitForOrder ()
         exit (EXIT_FAILURE);
     }
 
-    //Anuncia a chegada de uma ordem
+    //Signals the arrival of an order
     if (semUp (semgid, sh->orderReceived) == -1) {
         perror ("error on the up operation for semaphore access (PT)");
         exit (EXIT_FAILURE);
@@ -165,7 +165,7 @@ static void processOrder ()
 
     usleep((unsigned int) floor ((MAXCOOK * random ()) / RAND_MAX + 100.0));
     
-    //Espera que o waiter esteja disponivel
+    //Waits for the chef to be available
     if (semDown (semgid, sh->waiterRequestPossible) == -1) {
         perror ("error on the up operation for waiterRequest (PT)");
         exit (EXIT_FAILURE);
@@ -176,9 +176,9 @@ static void processOrder ()
         exit (EXIT_FAILURE);
     }
 
-    sh->fSt.st.chefStat = WAIT_FOR_ORDER;           //Altera o estado para WAIT_FOR_ORDER
-    saveState(nFic, &sh->fSt);                      //Guarda o estado
-    sh->fSt.waiterRequest.reqGroup = lastGroup;     //O pedido que vai fazer ao waiter
+    sh->fSt.st.chefStat = WAIT_FOR_ORDER;           //Changes state to WAIT_FOR_ORDER
+    saveState(nFic, &sh->fSt);                      //Saves state
+    sh->fSt.waiterRequest.reqGroup = lastGroup;     //The request to be made to the waiter
     sh->fSt.waiterRequest.reqType = FOODREADY;
 
     if (semUp (semgid, sh->mutex) == -1) {                                                      /* exit critical region */
@@ -186,7 +186,7 @@ static void processOrder ()
         exit (EXIT_FAILURE);
     }
 
-    //Sinaliza o waiter 
+    //Signals waiter 
     if (semUp (semgid, sh->waiterRequest) == -1) {                                                      /* exit critical region */
         perror ("error on the up operation for semaphore access (PT)");
         exit (EXIT_FAILURE);
